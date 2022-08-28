@@ -20,8 +20,11 @@ namespace FakeDLL.ConsoleApp1
         //[DllImport("FakeDLL.dll", CharSet = CharSet.Unicode)]
         //public static extern string HandleStringC(string inputStr);
 
-        [DllImport("FakeDLL.dll", CharSet = CharSet.Ansi)]
+        [DllImport("FakeDLL.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern int HandleStringD(string inputString, StringBuilder outputBuffer, int outputBufferLength);
+
+        [DllImport("FakeDLL.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int HandleStringE(string inputString, StringBuilder outputBuffer);
 
         static void Main()
         {
@@ -38,9 +41,13 @@ namespace FakeDLL.ConsoleApp1
             int outputBufferLength = 10;
             StringBuilder outputBuffer = new(outputBufferLength);
 
-            int resultInt = HandleStringD(inputStr, outputBuffer, outputBufferLength);
+            //int resultInt = HandleStringD(inputStr, outputBuffer, outputBufferLength);
 
-            Console.WriteLine($"HandleStringD requested {outputBufferLength} bytes, result is {resultInt}, output buffer is '{outputBuffer}'");
+            //Console.WriteLine($"HandleStringD requested {outputBufferLength} bytes, result is {resultInt}, output buffer is '{outputBuffer}'");
+
+            int resultInt = HandleStringE(inputStr.Take(10).ToString(), outputBuffer);
+
+            Console.WriteLine($"HandleStringE result is {resultInt}, output buffer is '{outputBuffer}'");
 
         }
     }

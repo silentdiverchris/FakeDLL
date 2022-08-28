@@ -7,10 +7,17 @@
     <Nullable>disable</Nullable>
     <StartupObject>FakeDLL.ConsoleApp1.Startup</StartupObject>
     <Platforms>AnyCPU;ARM64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FakeDLL\FakeDLL.vcxproj" />
+    <ProjectReference Include="..\StringFunctions\StringFunctions.vcxproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FakeDLL">
+      <HintPath>..\x64\Debug\FakeDLL.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
