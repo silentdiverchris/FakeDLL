@@ -10,35 +10,27 @@ int FakeDLL::AddValue(int y) {
 	return this->x + y;
 }
 
-int FakeDLL::HandleStringA(char* inputStr, char* outputStr)
+/// <summary>
+/// Return the first outputBufferLength bytes of the input, and return error 999 if the input was too short
+/// </summary>
+int FakeDLL::HandleStringD(const char* inputString, char* outputBuffer, int outputBufferLength)
 {
-	int buffLen = strlen(inputStr) + 1;
-	outputStr = new char[buffLen]();
+	errno_t errNo = 0;
 
-	errno_t errNo = strcpy_s(outputStr, buffLen, inputStr);
-	//stringCopy(outputStr, buffLen, inputStr);
-	//strcpy(outputStr, inputStr);
+	if (strlen(inputString) >= outputBufferLength)
+	{
+		outputBuffer = new char[outputBufferLength]();
+
+		errNo = strcpy_s(outputBuffer, outputBufferLength, inputString);
+
+		//stringCopy(outputStr, buffLen, inputStr);
+	}
+	else
+	{
+		errNo = 999;
+	}
 
 	return errNo;
-}
-
-int FakeDLL::HandleStringB(const std::string& inputStr, const std::string& outputStr)
-{
-	//int buffLen = 5;
-	//
-	//std::vector<char> outputVector(buffLen);
-
-	//std:copy(inputStr + 0, inputStr + buffLen, buffLen);
-
-	//outputStr = new char[5]();
-	//outputStr = "set static";
-
-	return 1;
-}
-
-std::string FakeDLL::HandleStringC(const std::string& inputStr)
-{
-	return "Blah blah";
 }
 
 //void stringCopy(char* dest, int maxLength, char const* source)
@@ -63,17 +55,7 @@ extern "C" __declspec(dllexport) int AddValue(FakeDLL* obj, int y)
 	return (int) obj->AddValue(y);
 }
 
-extern "C" __declspec(dllexport) int HandleStringA(FakeDLL * obj, char* inputStr, char* outputStr)
+extern "C" __declspec(dllexport) int HandleStringD(FakeDLL* obj, const char* inputString, char* outputBuffer, int outputBufferLength)
 {
-	return (int)obj->HandleStringA(inputStr, outputStr);
-}
-
-extern "C" __declspec(dllexport) int HandleStringB(FakeDLL * obj, const std::string & inputStr, const std::string & outputStr)
-{
-	return (int)obj->HandleStringB(inputStr, outputStr);
-}
-
-extern "C" __declspec(dllexport) std::string HandleStringC(FakeDLL * obj, const std::string & inputStr)
-{
-	return (std::string)obj->HandleStringC(inputStr);
+	return (int)obj->HandleStringD(inputString, outputBuffer, outputBufferLength);
 }
