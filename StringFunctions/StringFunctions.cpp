@@ -1,4 +1,6 @@
 #include "pch.h"
+#include <iostream>
+#include <algorithm>
 #include "StringFunctions.h"
 
 StringFunctions::StringFunctions(int x) {
@@ -47,6 +49,19 @@ int StringFunctions::HandleStringE(char* inputString, char* outputBuffer)
 	return errNo;
 }
 
+int StringFunctions::HandleStringF(char* outputBuffer, int bufferLength)
+{
+	std::string result = "returned string";
+
+	result = result.substr(0, bufferLength);
+
+	std::copy(result.begin(), result.end(), outputBuffer);
+	//outputBuffer[std::min(bufferLength - 1, (int)result.size())] = 0;
+	outputBuffer[bufferLength - 1] = 0;
+
+	return 0;
+}
+
 //void stringCopy(char* dest, int maxLength, char const* source)
 //{
 //	char* end = dest + maxLength - 1;
@@ -77,4 +92,9 @@ extern "C" __declspec(dllexport) int AddValue(StringFunctions * obj, int y)
 extern "C" __declspec(dllexport) int HandleStringE(StringFunctions * obj, char* inputString, char* outputBuffer)
 {
 	return (int)obj->HandleStringE(inputString, outputBuffer);
+}
+
+extern "C" __declspec(dllexport) int HandleStringF(StringFunctions * obj, char* outputBuffer, int bufferLength)
+{
+	return (int)obj->HandleStringF(outputBuffer, bufferLength);
 }

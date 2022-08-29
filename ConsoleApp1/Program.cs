@@ -23,8 +23,11 @@ namespace FakeDLL.ConsoleApp1
         //[DllImport("FakeDLL.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         //public static extern int HandleStringD(string inputString, StringBuilder outputBuffer, int outputBufferLength);
 
-        [DllImport("FakeDLL.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int HandleStringE(string inputString, StringBuilder outputBuffer);
+        [DllImport("FakeDLL.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int HandleStringE(string inputString, ref StringBuilder outputBuffer);
+
+        [DllImport("FakeDLL.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int HandleStringF(StringBuilder outputBuffer, int bufferLength);
 
         static void Main()
         {
@@ -36,19 +39,25 @@ namespace FakeDLL.ConsoleApp1
 
             //Console.WriteLine($"AddValue Result is {result}");
 
+            int resultInt = 0;
             string inputStr = "1234567890";
 
-            int outputBufferLength = 10;
+            int outputBufferLength = 1000;
             StringBuilder outputBuffer = new(outputBufferLength);
 
             //int resultInt = HandleStringD(inputStr, outputBuffer, outputBufferLength);
 
             //Console.WriteLine($"HandleStringD requested {outputBufferLength} bytes, result is {resultInt}, output buffer is '{outputBuffer}'");
 
-            int resultInt = HandleStringE(inputStr, outputBuffer);
+            //int resultInt = HandleStringE(inputStr, ref outputBuffer);
 
-            Console.WriteLine($"HandleStringE result is {resultInt}, output buffer is '{outputBuffer}'");
+            //Console.WriteLine($"HandleStringE result is {resultInt}, output buffer is '{outputBuffer}'");
 
+            outputBuffer = new(outputBufferLength);
+
+            resultInt = HandleStringF(outputBuffer, 20);
+
+            Console.WriteLine($"HandleStringF result is {resultInt}, output buffer is '{outputBuffer}'");
         }
     }
 }

@@ -11,9 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="FakeDLL">
-      <HintPath>..\x64\Debug\FakeDLL.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\StringFunctions\StringFunctions.vcxproj" />
   </ItemGroup>
 
 </Project>
