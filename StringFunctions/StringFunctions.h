@@ -11,7 +11,7 @@ public:
 
 	int AddValue(int y);
 
-	int HandleStringD(const char* inputString, char* outputBuffer, int outputBufferLength);
+	//int HandleStringD(const char* inputString, char* outputBuffer, int outputBufferLength);
 
 	int HandleStringE(char* inputString, char* outputBuffer);
 };
